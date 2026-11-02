@@ -2,32 +2,36 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+
+	folcon "github.com/msdrepo/framework"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-
-	fmt.Fprint(w, "hello! this is go web server.")
-}
-
-func userHandler(w http.ResponseWriter, r *http.Request) {
-
-	name := r.URL.Query().Get("name")
-	if name == "" {
-		name = "friend"
-	}
-	fmt.Fprintf(w, "welcome, %s!", name)
-}
-
 func main() {
+	app := folcon.New()
 
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/user", userHandler)
+	// Global Middleware
+	app.Use(func(c *folcon.Context) {
+		fmt.Println("[Global Logger] Incoming Request")
+		c.Next()
+	})
 
-	fmt.Println("the server is running on port 8080. - http://localhost:8080")
+	// Home Route
+	app.GET("/", func(c *folcon.Context) {
+		c.String(200, "Welcome to Folcon Framework!")
+	})
 
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		fmt.Printf("error : failed to start the server : %v\n", err)
+	// API Group with a specific prefix
+	api := app.Group("/api/v1")
+	{
+		api.GET("/users", func(c *folcon.Context) {
+			c.String(200, "List of all users from Folcon!")
+		})
+
+		api.POST("/users", func(c *folcon.Context) {
+			c.String(201, "User created successfully!")
+		})
 	}
+
+	fmt.Println("Folcon server running on http://localhost:8080...")
+	app.Run(":8080")
 }
