@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/msdrepo/folcon/controllers"
 	res "github.com/msdrepo/folcon/responses"
 	folcon "github.com/msdrepo/framework"
 )
@@ -58,6 +59,8 @@ func main() {
 
 		c.JSON(200, response)
 	})
+
+	api.GET("/admin-profile", controllers.GetProfile)
 
 	errorApi := app.Group("/error")
 
