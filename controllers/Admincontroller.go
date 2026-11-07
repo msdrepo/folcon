@@ -12,15 +12,7 @@ func AdminLogin(c *folcon.Context) {
 
 	var input validations.AdminLoginRequest
 
-	if err := c.BindJSON(&input); err != nil {
-		response := res.ErrorResponse(http.StatusBadRequest, "login failed: invalid JSON or missing fields", err.Error())
-
-		c.JSON(http.StatusBadRequest, response)
-		return
-
-	}
-
-	if validationErrors := folcon.ValidateRequired(&input); len(validationErrors) > 0 {
+	if validationErrors := c.ValidateRequired(&input); len(validationErrors) > 0 {
 		response := res.ErrorResponse(http.StatusUnprocessableEntity, "Validation failed", validationErrors)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
