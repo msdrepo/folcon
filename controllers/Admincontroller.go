@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/msdrepo/folcon/dto"
 	res "github.com/msdrepo/folcon/responses"
 	"github.com/msdrepo/folcon/validations"
 	folcon "github.com/msdrepo/framework"
@@ -18,9 +19,14 @@ func AdminLogin(c *folcon.Context) {
 		return
 	}
 
-	profileData := "test"
+	adminData := dto.AdminLoginDTO{}
 
-	response := res.SuccessResponse(http.StatusOK, "profile fetched successfully", profileData, nil)
+	adminData.EmailId = input.EmailId
+	adminData.Password = input.Password
+
+	profileData := adminData.EmailId + " " + adminData.Password
+
+	response := res.SuccessResponse(http.StatusOK, "admin login successfully", profileData, nil)
 
 	c.JSON(200, response)
 
