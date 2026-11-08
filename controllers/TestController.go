@@ -56,3 +56,22 @@ func UserCall(c *folcon.Context) {
 	c.JSON(200, response)
 
 }
+
+func GetParamTest(c *folcon.Context) {
+
+	userName := c.Query("user_name")
+	role := c.Query("role")
+
+	var profileData struct {
+		UserName string `json:"user_name"`
+		Role     string `json:"role"`
+	}
+
+	profileData.UserName = userName
+	profileData.Role = role
+
+	response := res.SuccessResponse(http.StatusOK, "profile fetched successfully", profileData, nil)
+
+	c.JSON(200, response)
+
+}

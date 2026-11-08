@@ -17,12 +17,13 @@ func Route() *folcon.Engine {
 	public.GET("/user", controllers.UserCall)
 	public.GET("/test", controllers.Greet)
 	public.POST("/login", controllers.Login)
+	public.GET("/user", controllers.GetParamTest)
 
 	admin := router.Group("/admin")
 
 	admin.GET("/test", controllers.TestCall)
-	admin.GET("/user", controllers.GetAdminProfile)
 	admin.POST("/login", controllers.AdminLogin)
+	// admin.GET("/user", controllers.AdminLogin)
 
 	return router
 
