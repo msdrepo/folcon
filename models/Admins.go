@@ -14,7 +14,7 @@ func AdminLoginCheck(data dto.AdminLoginDTO) (string, error) {
 
 	HashedPassword := "$2y$10$3NA2pPYllJC4RF4VLRIyBuQHoq7i1tsEakc8900XTPXhSzVtrTcHW"
 
-	if err := folcon.VerifyPassword(data.Password, HashedPassword); err != nil {
+	if err = folcon.VerifyPassword(data.Password, HashedPassword); err != nil {
 
 		return "", err
 	}
