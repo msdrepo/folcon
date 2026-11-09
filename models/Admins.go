@@ -6,6 +6,7 @@ import (
 
 	"github.com/msdrepo/folcon/dto"
 	folcon "github.com/msdrepo/framework"
+	"github.com/msdrepo/framework/tokens"
 )
 
 func AdminLoginCheck(data dto.AdminLoginDTO) (string, error) {
@@ -37,7 +38,9 @@ func AdminLoginCheck(data dto.AdminLoginDTO) (string, error) {
 		return "", err
 	}
 
-	token = "agaagaagaagaagaagaagaagaagaaga"
+	token, err = tokens.GenerateAdminToken(adminData.AdminId)
+
+	// token = "agaagaagaagaagaagaagaagaagaaga"
 
 	return token, nil
 
